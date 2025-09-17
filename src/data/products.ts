@@ -8,7 +8,7 @@ export const products: Product[] = [
     priceEur: 39,
     stock: 12,
     category: 'bracelets',
-    imageUrl: 'https://picsum.photos/seed/bracelet1/600/400'
+    imageUrl: 'https://source.unsplash.com/600x400/?jewelry,bracelet,silver'
   },
   {
     id: 'br-solstice',
@@ -17,7 +17,7 @@ export const products: Product[] = [
     priceEur: 45,
     stock: 8,
     category: 'bracelets',
-    imageUrl: 'https://picsum.photos/seed/bracelet2/600/400'
+    imageUrl: 'https://source.unsplash.com/600x400/?jewelry,bracelet,leather'
   },
   {
     id: 'bo-lune',
@@ -26,7 +26,7 @@ export const products: Product[] = [
     priceEur: 29,
     stock: 20,
     category: 'boucles-oreilles',
-    imageUrl: 'https://picsum.photos/seed/boucles1/600/400'
+    imageUrl: 'https://source.unsplash.com/600x400/?jewelry,earrings,gold'
   },
   {
     id: 'bo-etoile',
@@ -35,7 +35,7 @@ export const products: Product[] = [
     priceEur: 25,
     stock: 25,
     category: 'boucles-oreilles',
-    imageUrl: 'https://picsum.photos/seed/boucles2/600/400'
+    imageUrl: 'https://source.unsplash.com/600x400/?jewelry,earrings,silver'
   },
   {
     id: 'co-iris',
@@ -44,7 +44,7 @@ export const products: Product[] = [
     priceEur: 59,
     stock: 6,
     category: 'colliers',
-    imageUrl: 'https://picsum.photos/seed/collier1/600/400'
+    imageUrl: 'https://source.unsplash.com/600x400/?jewelry,necklace,pendant,gold'
   },
   {
     id: 'co-eden',
@@ -53,7 +53,7 @@ export const products: Product[] = [
     priceEur: 69,
     stock: 4,
     category: 'colliers',
-    imageUrl: 'https://picsum.photos/seed/collier2/600/400'
+    imageUrl: 'https://source.unsplash.com/600x400/?jewelry,necklace,pendant,silver'
   }
 ];
 
