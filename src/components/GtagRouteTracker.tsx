@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+import { buildTrackingContext } from '@/utils/tracking';
 
 declare global {
   interface Window {
@@ -15,15 +16,17 @@ export default function GtagRouteTracker({ measurementId }: GtagRouteTrackerProp
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
-    if (!window.gtag) return;
+    const context = buildTrackingContext();
 
     const pagePath = location.pathname + location.search + location.hash;
-    // GA4: renvoyer une config avec page_path pour chaque vue
-    window.gtag('config', measurementId, {
-      page_path: pagePath
-    });
+    if (window.gtag) {
+      // GA4: renvoyer une config avec page_path pour chaque vue
+      window.gtag('config', measurementId, {
+        page_path: pagePath
+      });
+    }
     if (window.dataLayer) {
-      window.dataLayer.push({ event: 'page_view', page_path: pagePath } as any);
+      window.dataLayer.push({ event: 'page_view', ...context } as any);
     }
   }, [location.pathname, location.search, location.hash, measurementId]);
 

@@ -1,9 +1,11 @@
 import { Link, NavLink } from 'react-router-dom';
+import { useState } from 'react';
 import { useCart } from '@/context/CartContext';
 import { useTheme } from '@/context/ThemeContext';
 import { useI18n } from '@/context/LanguageContext';
 
 export default function Header() {
+  const [isNavOpen, setIsNavOpen] = useState(false);
   const { items } = useCart();
   const { mode, toggle } = useTheme();
   const { t, locale, setLocale } = useI18n();
@@ -12,7 +14,18 @@ export default function Header() {
     <header className="header">
       <div className="container header-inner">
         <Link to="/" className="logo">{t('brand')}</Link>
-        <nav className="nav">
+        <button
+          className="nav-toggle"
+          aria-label={isNavOpen ? t('close_menu') ?? 'Fermer le menu' : t('open_menu') ?? 'Ouvrir le menu'}
+          aria-controls="primary-nav"
+          aria-expanded={isNavOpen}
+          onClick={() => setIsNavOpen(o => !o)}
+        >
+          <span className="nav-toggle-bar" />
+          <span className="nav-toggle-bar" />
+          <span className="nav-toggle-bar" />
+        </button>
+        <nav id="primary-nav" className={`nav ${isNavOpen ? 'open' : ''}`} role="navigation">
           <NavLink to="/univers">{t('nav_univers')}</NavLink>
           <NavLink to="/categorie/bracelets">{t('nav_bracelets')}</NavLink>
           <NavLink to="/categorie/boucles-oreilles">{t('nav_boucles')}</NavLink>
