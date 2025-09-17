@@ -5,7 +5,7 @@ export const products: Product[] = [
     id: 'br-aurora',
     name: 'Bracelet Aurora',
     description: "Bracelet fin en argent 925, perles nacrées.",
-    priceEur: 39,
+    priceEur: 39.75,
     stock: 12,
     category: 'bracelets',
     imageUrl: 'https://picsum.photos/seed/bracelet-aurora/600/400'
@@ -14,7 +14,7 @@ export const products: Product[] = [
     id: 'br-solstice',
     name: 'Bracelet Solstice',
     description: "Cuir végan tressé, fermoir acier inoxydable.",
-    priceEur: 45,
+    priceEur: 45.50,
     stock: 8,
     category: 'bracelets',
     imageUrl: 'https://picsum.photos/seed/bracelet-solstice/600/400'
