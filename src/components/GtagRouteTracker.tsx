@@ -22,6 +22,9 @@ export default function GtagRouteTracker({ measurementId }: GtagRouteTrackerProp
     window.gtag('config', measurementId, {
       page_path: pagePath
     });
+    if (window.dataLayer) {
+      window.dataLayer.push({ event: 'page_view', page_path: pagePath } as any);
+    }
   }, [location.pathname, location.search, location.hash, measurementId]);
 
   return null;
