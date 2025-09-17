@@ -13,6 +13,7 @@ import Privacy from './routes/Privacy';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import { LanguageProvider } from './context/LanguageContext';
+import GtagRouteTracker from './components/GtagRouteTracker';
 
 function App() {
 	return (
@@ -20,6 +21,7 @@ function App() {
 			<LanguageProvider>
 				<CartProvider>
 				<div className="app-container">
+					<GtagRouteTracker measurementId="G-3LL7VKTBM4" />
 					<Header />
 					<main className="main-content">
 						<Routes>
