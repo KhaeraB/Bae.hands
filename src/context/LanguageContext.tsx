@@ -124,7 +124,7 @@ const en: Dict = {
 
 const LanguageContext = createContext<{ locale: Locale; setLocale: (l: Locale) => void; t: (k: string) => string } | undefined>(undefined);
 
-export function LanguageProvider({ children }: { children: React.ReactNode }) {
+export function LanguageProvider({ children }: Readonly<{ children: React.ReactNode }>) {
   const [locale, setLocale] = useState<Locale>('fr');
   useEffect(() => {
     const saved = window.localStorage.getItem('locale');

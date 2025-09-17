@@ -76,7 +76,7 @@ interface CartContextValue extends CartState {
 
 const CartContext = createContext<CartContextValue | undefined>(undefined);
 
-export function CartProvider({ children }: { children: React.ReactNode }) {
+export function CartProvider({ children }: Readonly<{ children: React.ReactNode }>) {
   const [state, dispatch] = useReducer(cartReducer, { items: [] });
 
   const totals = useMemo(() => {
@@ -91,14 +91,14 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     return { subtotal, shipping, vat, total };
   }, [state.items]);
 
-  const value: CartContextValue = {
+  const value: CartContextValue = useMemo(() => ({
     items: state.items,
-    addItem: (productId, quantity = 1) => dispatch({ type: 'ADD', productId, quantity }),
-    removeItem: productId => dispatch({ type: 'REMOVE', productId }),
-    updateQuantity: (productId, quantity) => dispatch({ type: 'UPDATE_QTY', productId, quantity }),
+    addItem: (productId: string, quantity: number = 1) => dispatch({ type: 'ADD', productId, quantity }),
+    removeItem: (productId: string) => dispatch({ type: 'REMOVE', productId }),
+    updateQuantity: (productId: string, quantity: number) => dispatch({ type: 'UPDATE_QTY', productId, quantity }),
     clearCart: () => dispatch({ type: 'CLEAR' }),
     totals
-  };
+  }), [state.items, totals]);
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
 }

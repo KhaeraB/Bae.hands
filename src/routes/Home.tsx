@@ -12,7 +12,7 @@ export default function Home() {
           <h1>{t('home_hero_title')}</h1>
           <p>{t('home_hero_sub')}</p>
         </div>
-        <img className="hero-img" src="https://picsum.photos/seed/hero-bijoux/1200/500" alt="Bijoux" />
+        <img className="hero-img" src="https://picsum.photos/seed/hero-jewelry/1200/500" alt="Bijoux" />
       </section>
 
       <section>
