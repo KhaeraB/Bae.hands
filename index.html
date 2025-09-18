@@ -39,6 +39,13 @@
   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
   })(window,document,'script','dataLayer','GTM-NCN7WKRC');
   // End Google Tag Manager
+      // Charger GA4 gtag.js pour que gtag() soit disponible en production
+      (function(){
+        var s = document.createElement('script');
+        s.async = true;
+        s.src = 'https://www.googletagmanager.com/gtag/js?id=G-3LL7VKTBM4';
+        document.head.appendChild(s);
+      })();
       gtag('js', new Date());
       gtag('config', 'G-3LL7VKTBM4');
       // Contexte de la première page (device, navigateur, referrer, UTM)
