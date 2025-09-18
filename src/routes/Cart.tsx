@@ -1,11 +1,17 @@
 import { Link } from 'react-router-dom';
+import { useEffect } from 'react';
 import { useCart } from '@/context/CartContext';
 import { getProductById } from '@/data/products';
 import { useI18n } from '@/context/LanguageContext';
+import { trackViewCart } from '@/utils/tracking';
 
 export default function Cart() {
   const { items, updateQuantity, removeItem, totals } = useCart();
   const { t } = useI18n();
+
+  useEffect(() => {
+    trackViewCart(items, totals.total);
+  }, [items, totals.total]);
   return (
     <div className="container">
       <h1>{t('cart_title')}</h1>

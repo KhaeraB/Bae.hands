@@ -66,4 +66,99 @@ export const buildTrackingContext = () => {
   } as Record<string, string | undefined>;
 };
 
+// ---- E-commerce helpers respecting consent ----
+import { getProductById } from '@/data/products';
+import type { CartItem, Product } from '@/types';
+
+const CONSENT_STORAGE_KEY = 'cookie_consent_v1';
+const CURRENCY = 'EUR';
+
+const hasAnalyticsConsent = (): boolean => {
+  try {
+    const saved = typeof window !== 'undefined' ? window.localStorage.getItem(CONSENT_STORAGE_KEY) : null;
+    return saved === 'accepted';
+  } catch {
+    return false;
+  }
+};
+
+export const sendEvent = (eventName: string, params?: Record<string, unknown>): void => {
+  if (typeof window === 'undefined') return;
+  if (!hasAnalyticsConsent()) return;
+  if (window.gtag) {
+    window.gtag('event', eventName as any, params as any);
+  }
+  if (window.dataLayer) {
+    (window.dataLayer as any[]).push({ event: eventName, ...(params || {}) });
+  }
+};
+
+const productToGaItem = (product: Product, quantity: number) => ({
+  item_id: product.id,
+  item_name: product.name,
+  item_category: product.category,
+  price: product.priceEur,
+  quantity
+});
+
+const cartItemsToGaItems = (items: CartItem[]) => {
+  return items
+    .map(i => {
+      const p = getProductById(i.productId);
+      if (!p) return undefined;
+      return productToGaItem(p, i.quantity);
+    })
+    .filter(Boolean) as Array<ReturnType<typeof productToGaItem>>;
+};
+
+export const trackViewItem = (product: Product): void => {
+  sendEvent('view_item', {
+    currency: CURRENCY,
+    value: product.priceEur,
+    items: [productToGaItem(product, 1)]
+  });
+};
+
+export const trackAddToCart = (product: Product, quantity: number): void => {
+  sendEvent('add_to_cart', {
+    currency: CURRENCY,
+    value: product.priceEur * quantity,
+    items: [productToGaItem(product, quantity)]
+  });
+};
+
+export const trackViewCart = (items: CartItem[], cartValue: number): void => {
+  const gaItems = cartItemsToGaItems(items);
+  sendEvent('view_cart', {
+    currency: CURRENCY,
+    value: cartValue,
+    items: gaItems
+  });
+};
+
+export const trackBeginCheckout = (items: CartItem[], cartValue: number): void => {
+  const gaItems = cartItemsToGaItems(items);
+  sendEvent('begin_checkout', {
+    currency: CURRENCY,
+    value: cartValue,
+    items: gaItems
+  });
+};
+
+export const trackPurchase = (
+  items: CartItem[],
+  totals: { subtotal: number; shipping: number; vat: number; total: number },
+  transactionId: string
+): void => {
+  const gaItems = cartItemsToGaItems(items);
+  sendEvent('purchase', {
+    currency: CURRENCY,
+    transaction_id: transactionId,
+    value: totals.total,
+    shipping: totals.shipping,
+    tax: totals.vat,
+    items: gaItems
+  });
+};
+
 

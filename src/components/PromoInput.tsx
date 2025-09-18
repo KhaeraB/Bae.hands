@@ -8,7 +8,9 @@ const promos: Promo[] = [
   { code: 'BOHO15', percent: 15 }
 ];
 
-export default function PromoInput({ onApply, onRemove, active }: { onApply: (p: Promo) => void; onRemove: () => void; active?: Promo | null }) {
+type PromoInputProps = Readonly<{ onApply: (p: Promo) => void; onRemove: () => void; active?: Promo | null }>;
+
+export default function PromoInput({ onApply, onRemove, active }: PromoInputProps) {
   const { t } = useI18n();
   const [code, setCode] = useState('');
   function handleApply() {

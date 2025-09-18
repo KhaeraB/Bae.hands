@@ -1,7 +1,8 @@
-import { FormEvent, useMemo, useState } from 'react';
+import { FormEvent, useEffect, useState } from 'react';
 import { useCart } from '@/context/CartContext';
 import { useI18n } from '@/context/LanguageContext';
 import PromoInput, { Promo } from '@/components/PromoInput';
+import { trackBeginCheckout, trackPurchase } from '@/utils/tracking';
 
 function luhnValid(cardNumber: string): boolean {
   const digits = cardNumber.replace(/\s+/g, '');
@@ -21,7 +22,8 @@ function luhnValid(cardNumber: string): boolean {
 }
 
 function expiryValid(mmYY: string): boolean {
-  const m = mmYY.match(/^(0[1-9]|1[0-2])\/(\d{2})$/);
+  const re = /^(0[1-9]|1[0-2])\/(\d{2})$/;
+  const m = re.exec(mmYY);
   if (!m) return false;
   const month = Number(m[1]);
   const year = 2000 + Number(m[2]);
@@ -35,11 +37,16 @@ export default function Checkout() {
   const { t } = useI18n();
   const [submitted, setSubmitted] = useState(false);
   const [errors, setErrors] = useState<string[]>([]);
-  const maskedTotal = useMemo(() => totals.total.toFixed(2), [totals.total]);
   const [promo, setPromo] = useState<Promo | null>(null);
   const discount = promo ? (totals.subtotal * promo.percent) / 100 : 0;
   const totalAfterDiscount = (totals.subtotal - discount) + totals.shipping + totals.vat;
   const maskedTotalAfterDiscount = totalAfterDiscount.toFixed(2);
+
+  useEffect(() => {
+    // Déclenche begin_checkout à l'arrivée sur la page
+    trackBeginCheckout(items, totalAfterDiscount);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   function validate(form: HTMLFormElement): string[] {
     const errs: string[] = [];
@@ -72,6 +79,12 @@ export default function Checkout() {
       // Paiement simulé
       setTimeout(() => {
         setSubmitted(true);
+        const txnId = 'TX-' + Math.random().toString(36).slice(2, 10).toUpperCase();
+        trackPurchase(
+          items,
+          { subtotal: totals.subtotal - discount, shipping: totals.shipping, vat: totals.vat, total: totalAfterDiscount },
+          txnId
+        );
         clearCart();
       }, 800);
     }
@@ -106,7 +119,7 @@ export default function Checkout() {
           </div>
           {errors.length > 0 && (
             <ul className="errors">
-              {errors.map((e, idx) => <li key={idx}>{e}</li>)}
+              {errors.map((e) => <li key={e}>{e}</li>)}
             </ul>
           )}
           <PromoInput active={promo} onApply={(p) => setPromo(p)} onRemove={() => setPromo(null)} />
