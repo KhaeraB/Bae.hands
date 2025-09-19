@@ -1,89 +1,85 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="fr">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Boutique de bijoux artisanaux - bracelets, boucles d'oreilles, colliers." />
-    <title>Bijoux Boutique</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-    <!-- Consent Mode v2: définir les valeurs par défaut AVANT de charger gtag -->
+    <meta
+      name="description"
+      content="Boutique de bijoux artisanaux - bracelets, boucles d'oreilles, colliers."
+    />
     <script>
       window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("set", "url_passthrough", true);
+      gtag("set", "ads_data_redaction", true);
 
-      // Optimisations de mesure respectueuses du consentement
-      gtag('set', 'url_passthrough', true);
-      gtag('set', 'ads_data_redaction', true);
-
-      // Consentement par défaut: refusé jusqu'au choix utilisateur
-      // Attendre jusqu'à 500 ms une mise à jour éventuelle (bannière asynchrone)
-      gtag('consent', 'default', {
-        'ad_storage': 'denied',
-        'analytics_storage': 'denied',
-        'ad_user_data': 'denied',
-        'ad_personalization': 'denied',
-        'wait_for_update': 500
+      gtag("consent", "default", {
+        ad_storage: "denied",
+        analytics_storage: "denied",
+        ad_user_data: "denied",
+        ad_personalization: "denied",
+        wait_for_update: 500,
       });
     </script>
-   
-   
 
     <script>
       // Google Tag Manager
-      (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-  })(window,document,'script','dataLayer','GTM-NCN7WKRC');
-  // End Google Tag Manager
-      // Charger GA4 gtag.js pour que gtag() soit disponible en production
-      (function(){
-        var s = document.createElement('script');
-        s.async = true;
-        s.src = 'https://www.googletagmanager.com/gtag/js?id=G-3LL7VKTBM4';
-        document.head.appendChild(s);
-      })();
-      gtag('js', new Date());
-      gtag('config', 'G-3LL7VKTBM4');
+      (function (w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+        var f = d.getElementsByTagName(s)[0],
+          j = d.createElement(s),
+          dl = l != "dataLayer" ? "&l=" + l : "";
+        j.async = true;
+        j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+        f.parentNode.insertBefore(j, f);
+      })(window, document, "script", "dataLayer", "GTM-NCN7WKRC");
+      // End Google Tag Manager
+  
+      // NOTE: Pas de chargement direct de gtag.js ici pour éviter les doublons avec GTM
       // Contexte de la première page (device, navigateur, referrer, UTM)
-      (function(){
+      (function () {
         var w = window;
         var d = document;
         var page_path = location.pathname + location.search + location.hash;
         var referrer = d.referrer || undefined;
         var lang = navigator.language;
         var width = w.innerWidth;
-        var device_type = 'desktop';
-        if (width < 640) { device_type = 'mobile'; }
-        else if (width < 1024) { device_type = 'tablet'; }
+        var device_type = "desktop";
+        if (width < 640) {
+          device_type = "mobile";
+        } else if (width < 1024) {
+          device_type = "tablet";
+        }
 
-        var ua = (navigator.userAgent || '').toLowerCase();
-        var browser = 'Unknown';
-        if (ua.indexOf('edg/') !== -1) browser = 'Edge';
-        else if (ua.indexOf('opr/') !== -1 || ua.indexOf('opera') !== -1) browser = 'Opera';
-        else if (ua.indexOf('chrome/') !== -1) browser = 'Chrome';
-        else if (ua.indexOf('safari/') !== -1 && ua.indexOf('chrome/') === -1) browser = 'Safari';
-        else if (ua.indexOf('firefox/') !== -1) browser = 'Firefox';
+        var ua = (navigator.userAgent || "").toLowerCase();
+        var browser = "Unknown";
+        if (ua.indexOf("edg/") !== -1) browser = "Edge";
+        else if (ua.indexOf("opr/") !== -1 || ua.indexOf("opera") !== -1)
+          browser = "Opera";
+        else if (ua.indexOf("chrome/") !== -1) browser = "Chrome";
+        else if (ua.indexOf("safari/") !== -1 && ua.indexOf("chrome/") === -1)
+          browser = "Safari";
+        else if (ua.indexOf("firefox/") !== -1) browser = "Firefox";
 
-        var os = 'Unknown';
-        if (/Windows/i.test(ua)) os = 'Windows';
-        else if (/mac os x/i.test(ua)) os = 'macOS';
-        else if (/Android/i.test(ua)) os = 'Android';
-        else if (/iphone|ipad|ipod/i.test(ua)) os = 'iOS';
-        else if (/Linux/i.test(ua)) os = 'Linux';
+        var os = "Unknown";
+        if (/Windows/i.test(ua)) os = "Windows";
+        else if (/mac os x/i.test(ua)) os = "macOS";
+        else if (/Android/i.test(ua)) os = "Android";
+        else if (/iphone|ipad|ipod/i.test(ua)) os = "iOS";
+        else if (/Linux/i.test(ua)) os = "Linux";
 
         var u = new URL(location.href);
-        var utm_source = u.searchParams.get('utm_source') || undefined;
-        var utm_medium = u.searchParams.get('utm_medium') || undefined;
-        var utm_campaign = u.searchParams.get('utm_campaign') || undefined;
-        var utm_content = u.searchParams.get('utm_content') || undefined;
-        var utm_term = u.searchParams.get('utm_term') || undefined;
+        var utm_source = u.searchParams.get("utm_source") || undefined;
+        var utm_medium = u.searchParams.get("utm_medium") || undefined;
+        var utm_campaign = u.searchParams.get("utm_campaign") || undefined;
+        var utm_content = u.searchParams.get("utm_content") || undefined;
+        var utm_term = u.searchParams.get("utm_term") || undefined;
 
         var context = {
-          event: 'page_view',
+          event: "page_view",
           page_path: page_path,
           referrer: referrer,
           user_lang: lang,
@@ -94,12 +90,17 @@
           utm_medium: utm_medium,
           utm_campaign: utm_campaign,
           utm_content: utm_content,
-          utm_term: utm_term
+          utm_term: utm_term,
         };
-        if (w.dataLayer) { w.dataLayer.push(context); }
+        if (w.dataLayer) {
+          w.dataLayer.push(context);
+        }
       })();
     </script>
+    <title>Bijoux Boutique</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
   </body>
-  </html>
-
-
+</html>
