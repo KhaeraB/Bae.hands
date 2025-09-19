@@ -37,63 +37,6 @@
         f.parentNode.insertBefore(j, f);
       })(window, document, "script", "dataLayer", "GTM-NCN7WKRC");
       // End Google Tag Manager
-      // Contexte de la première page (device, navigateur, referrer, UTM)
-      (function () {
-        var w = window;
-        var d = document;
-        var page_path = location.pathname + location.search + location.hash;
-        var referrer = d.referrer || undefined;
-        var lang = navigator.language;
-        var width = w.innerWidth;
-        var device_type = "desktop";
-        if (width < 640) {
-          device_type = "mobile";
-        } else if (width < 1024) {
-          device_type = "tablet";
-        }
-
-        var ua = (navigator.userAgent || "").toLowerCase();
-        var browser = "Unknown";
-        if (ua.indexOf("edg/") !== -1) browser = "Edge";
-        else if (ua.indexOf("opr/") !== -1 || ua.indexOf("opera") !== -1)
-          browser = "Opera";
-        else if (ua.indexOf("chrome/") !== -1) browser = "Chrome";
-        else if (ua.indexOf("safari/") !== -1 && ua.indexOf("chrome/") === -1)
-          browser = "Safari";
-        else if (ua.indexOf("firefox/") !== -1) browser = "Firefox";
-
-        var os = "Unknown";
-        if (/Windows/i.test(ua)) os = "Windows";
-        else if (/mac os x/i.test(ua)) os = "macOS";
-        else if (/Android/i.test(ua)) os = "Android";
-        else if (/iphone|ipad|ipod/i.test(ua)) os = "iOS";
-        else if (/Linux/i.test(ua)) os = "Linux";
-
-        var u = new URL(location.href);
-        var utm_source = u.searchParams.get("utm_source") || undefined;
-        var utm_medium = u.searchParams.get("utm_medium") || undefined;
-        var utm_campaign = u.searchParams.get("utm_campaign") || undefined;
-        var utm_content = u.searchParams.get("utm_content") || undefined;
-        var utm_term = u.searchParams.get("utm_term") || undefined;
-
-        var context = {
-          event: "page_view",
-          page_path: page_path,
-          referrer: referrer,
-          user_lang: lang,
-          device_type: device_type,
-          browser: browser,
-          os: os,
-          utm_source: utm_source,
-          utm_medium: utm_medium,
-          utm_campaign: utm_campaign,
-          utm_content: utm_content,
-          utm_term: utm_term,
-        };
-        if (w.dataLayer) {
-          w.dataLayer.push(context);
-        }
-      })();
     </script>
     <title>Bijoux Boutique</title>
   </head>
